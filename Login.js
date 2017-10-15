@@ -20,13 +20,18 @@ export default class Login extends Component<{}> {
         <Text style={styles.heading}>
           Github Browser
         </Text>
-        <TextInput style={styles.input}
-           placeholder="Github username" />
-        <TextInput style={styles.input}
+        <TextInput
+          onChangeText={(text) => this.setState({username: text})}
+          style={styles.input}
+          placeholder="Github username" />
+        <TextInput
+          onChangeText={(text) => this.setState({password: text})}
+          style={styles.input}
            placeholder="Github password"
            secureTextEntry={true}/>
 
          <TouchableHighlight
+           onPress={this.onLoginPressed.bind(this)}
            style={styles.button}>
            <Text style={styles.buttonText}>
              Log In
@@ -34,6 +39,9 @@ export default class Login extends Component<{}> {
          </TouchableHighlight>
       </View>
     );
+  }
+  onLoginPressed() {
+    console.log('Log in with ' + this.state.username);
   }
 }
 

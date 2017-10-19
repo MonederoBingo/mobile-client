@@ -8,10 +8,18 @@ import {
   TextInput,
   View,
   Image,
-  TouchableHighlight
+  TouchableHighlight,
+  ActivityIndicator
 } from 'react-native';
 
 export default class Login extends Component<{}> {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      showProgress: false
+    }
+  }
   render() {
     return (
       <View style={styles.container}>
@@ -37,11 +45,17 @@ export default class Login extends Component<{}> {
              Log In
            </Text>
          </TouchableHighlight>
+
+         <ActivityIndicator
+           animating={this.state.showProgress}
+           size="large"
+           />
       </View>
     );
   }
   onLoginPressed() {
     console.log('Log in with ' + this.state.username);
+    this.setState({showProgress: true});
   }
 }
 

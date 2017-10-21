@@ -22,6 +22,17 @@ export default class Login extends Component<{}> {
     }
   }
   render() {
+    var errorCtrl = <View />;
+    if(!this.state.success && this.state.badCredentials) {
+      errorCtrl = <Text style={styles.error}>
+        Verify username and password
+      </Text>
+    }
+    if(!this.state.success && this.state.unknownError) {
+      errorCtrl = <Text style={styles.error}>
+        Unexpected issue
+      </Text>
+    }
     return (
       <View style={styles.container}>
         <Image style={styles.logo}
@@ -46,6 +57,8 @@ export default class Login extends Component<{}> {
              Log In
            </Text>
          </TouchableHighlight>
+
+         {errorCtrl}
 
          <ActivityIndicator
            animating={this.state.showProgress}
@@ -79,9 +92,11 @@ export default class Login extends Component<{}> {
     })
     .then((results) => {
       console.log(results);
+      this.setState({success: true});
     })
     .catch((err) => {
       this.setState(err);
+      this.setState({success: false});
     })
     .finally(() => {
       this.setState({showProgress: false});
@@ -125,5 +140,9 @@ const styles = StyleSheet.create({
     fontSize: 22,
     color: '#FFF',
     alignSelf: 'center'
+  },
+  error: {
+    color: 'red',
+    paddingTop: 10
   }
 })

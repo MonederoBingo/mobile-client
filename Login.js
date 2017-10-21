@@ -1,6 +1,7 @@
 'use strict';
 
 import React, { Component } from 'react';
+import buffer from 'buffer';
 import {
   Platform,
   StyleSheet,
@@ -56,6 +57,21 @@ export default class Login extends Component<{}> {
   onLoginPressed() {
     console.log('Log in with ' + this.state.username);
     this.setState({showProgress: true});
+    var b = new buffer.Buffer(this.state.username + ':' + this.state.password);
+    var encodedAuth = b.toString('base64');
+
+    fetch('https://api.github.com/user', {
+      headers: {
+        'Authorization': 'Basic ' + encodedAuth
+      }
+    })
+    .then((response) => {
+       return response.json();
+    })
+    .then((results) => {
+      console.log(results);
+      this.setState({showProgress: false});
+    });
   }
 }
 

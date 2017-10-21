@@ -1,7 +1,8 @@
 'use strict';
 
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import buffer from 'buffer';
+import AuthService from './AuthService';
 import {
   Platform,
   StyleSheet,
@@ -13,7 +14,7 @@ import {
   ActivityIndicator
 } from 'react-native';
 
-export default class Login extends Component<{}> {
+export default class Login extends Component < {} > {
   constructor(props) {
     super(props);
 
@@ -22,83 +23,47 @@ export default class Login extends Component<{}> {
     }
   }
   render() {
-    var errorCtrl = <View />;
-    if(!this.state.success && this.state.badCredentials) {
+    var errorCtrl = <View/>;
+    if (!this.state.success && this.state.badCredentials) {
       errorCtrl = <Text style={styles.error}>
         Verify username and password
       </Text>
     }
-    if(!this.state.success && this.state.unknownError) {
+    if (!this.state.success && this.state.unknownError) {
       errorCtrl = <Text style={styles.error}>
         Unexpected issue
       </Text>
     }
     return (
       <View style={styles.container}>
-        <Image style={styles.logo}
-           source={require('./images/alayor.png')} />
+        <Image style={styles.logo} source={require('./images/alayor.png')}/>
         <Text style={styles.heading}>
           Github Browser
         </Text>
-        <TextInput
-          onChangeText={(text) => this.setState({username: text})}
-          style={styles.input}
-          placeholder="Github username" />
-        <TextInput
-          onChangeText={(text) => this.setState({password: text})}
-          style={styles.input}
-           placeholder="Github password"
-           secureTextEntry={true}/>
+        <TextInput onChangeText={(text) => this.setState({username: text})} style={styles.input} placeholder="Github username"/>
+        <TextInput onChangeText={(text) => this.setState({password: text})} style={styles.input} placeholder="Github password" secureTextEntry={true}/>
 
-         <TouchableHighlight
-           onPress={this.onLoginPressed.bind(this)}
-           style={styles.button}>
-           <Text style={styles.buttonText}>
-             Log In
-           </Text>
-         </TouchableHighlight>
+        <TouchableHighlight onPress={this.onLoginPressed.bind(this)} style={styles.button}>
+          <Text style={styles.buttonText}>
+            Log In
+          </Text>
+        </TouchableHighlight>
 
-         {errorCtrl}
+        {errorCtrl}
 
-         <ActivityIndicator
-           animating={this.state.showProgress}
-           size="large"
-           />
+        <ActivityIndicator animating={this.state.showProgress} size="large"/>
       </View>
     );
   }
   onLoginPressed() {
     console.log('Log in with ' + this.state.username);
     this.setState({showProgress: true});
-    var b = new buffer.Buffer(this.state.username + ':' + this.state.password);
-    var encodedAuth = b.toString('base64');
 
-    fetch('https://api.github.com/user', {
-      headers: {
-        'Authorization': 'Basic ' + encodedAuth
-      }
-    })
-    .then((response) => {
-      if(response.status >= 200 && response.status < 300) {
-        return response;
-      }
-      throw  {
-        badCredentials: response.status == 401,
-        unknownError: response.status != 401
-      }
-    })
-    .then((response) => {
-       return response.json();
-    })
-    .then((results) => {
-      console.log(results);
-      this.setState({success: true});
-    })
-    .catch((err) => {
-      this.setState(err);
-      this.setState({success: false});
-    })
-    .finally(() => {
+    AuthService.login({
+      username: this.state.username,
+      password: this.state.password
+    }, (results) => {
+      this.setState(results);
       this.setState({showProgress: false});
     });
   }

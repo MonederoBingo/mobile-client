@@ -1,4 +1,6 @@
 import buffer from 'buffer';
+import react from 'react-native';
+const AsyncStorage = react.AsyncStorage;
 
 class AuthService {
   login(creds, cb) {
@@ -23,7 +25,15 @@ class AuthService {
         return response.json();
       })
       .then((results) => {
-        return cb({success: true});
+        AsyncStorage.multiSet([
+          ['auth', encodedAuth],
+          ['user', JSON.stringify(results)]
+        ], (err) => {
+          if(err) {
+            throw err;
+          }
+          return cb({success: true});
+        });
       })
       .catch((err) => {
         return cb(err);

@@ -24,7 +24,7 @@ export default class AppContainer extends Component < {} > {
         <TabBarIOS.Item
           title="Feed"
           selected={this.state.selectedTab == 'feed'}
-          icon={require('./images/alayor.png')}
+          icon={require('./images/tool.png')}
           onPress={() => this.setState({selectedTab: 'feed'})}
         >
           <Text style={styles.welcome}>Tab1</Text>
@@ -32,7 +32,7 @@ export default class AppContainer extends Component < {} > {
         <TabBarIOS.Item
           title="Search"
           selected={this.state.selectedTab == 'search'}
-          icon={require('./images/alayor.png')}
+          icon={require('./images/search.png')}
           onPress={() => this.setState({selectedTab: 'search'})}
         >
           <Text style={styles.welcome}>Tab2</Text>

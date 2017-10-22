@@ -2,6 +2,7 @@
 
 import React, {Component} from 'react';
 import AuthService from './AuthService';
+import Feed from './Feed';
 import {
   StyleSheet,
   Text,
@@ -27,7 +28,7 @@ export default class AppContainer extends Component < {} > {
           icon={require('./images/tool.png')}
           onPress={() => this.setState({selectedTab: 'feed'})}
         >
-          <Text style={styles.welcome}>Tab1</Text>
+          <Feed />
         </TabBarIOS.Item>
         <TabBarIOS.Item
           title="Search"

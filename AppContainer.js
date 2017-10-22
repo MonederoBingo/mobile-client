@@ -5,21 +5,39 @@ import AuthService from './AuthService';
 import {
   StyleSheet,
   Text,
-  View
+  View,
+  TabBarIOS
 } from 'react-native';
+
 
 export default class AppContainer extends Component < {} > {
   constructor(props) {
     super(props);
 
     this.state = {
+      selectedTab: 'feed'
     }
   }
   render() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>Tabs comming soon!</Text>
-      </View>
+      <TabBarIOS style={styles.container}>
+        <TabBarIOS.Item
+          title="Feed"
+          selected={this.state.selectedTab == 'feed'}
+          icon={require('./images/alayor.png')}
+          onPress={() => this.setState({selectedTab: 'feed'})}
+        >
+          <Text style={styles.welcome}>Tab1</Text>
+        </TabBarIOS.Item>
+        <TabBarIOS.Item
+          title="Search"
+          selected={this.state.selectedTab == 'search'}
+          icon={require('./images/alayor.png')}
+          onPress={() => this.setState({selectedTab: 'search'})}
+        >
+          <Text style={styles.welcome}>Tab2</Text>
+        </TabBarIOS.Item>
+      </TabBarIOS>
     )
   }
 }
@@ -35,5 +53,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     textAlign: 'center',
     margin: 10,
+    paddingTop: 100
   },
 });

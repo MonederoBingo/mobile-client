@@ -21,11 +21,28 @@ const instructions = Platform.select({
 });
 
 export default class App extends Component<{}> {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      isLoggedIn: false
+    }
+  }
   render() {
-    const message = 'Hello there 2';
-    return (
-      <Login />
-    );
+    if(this.state.isLoggedIn) {
+      return (
+        <View style={styles.container}>
+          <Text style={styles.welcome}>Logged In!</Text>
+        </View>
+      )
+    } else {
+      return (
+        <Login onLogin={this.onLogin.bind(this)}/>
+      );
+    }
+  }
+  onLogin() {
+   this.setState({isLoggedIn: true});
   }
 }
 

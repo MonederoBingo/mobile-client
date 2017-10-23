@@ -5,7 +5,8 @@ import AuthService from './AuthService';
 import {
   Text,
   View,
-  ListView
+  ListView,
+  ActivityIndicator,
 } from 'react-native';
 
 
@@ -16,7 +17,8 @@ export default class Feed extends Component < {} > {
       rowHasChanged: (r1, r2) => r1 != r2
     });
     this.state = {
-      dataSource: ds.cloneWithRows(['A', 'B', 'C'])
+      dataSource: ds,
+      showProgress: true
     }
     this.fetchFeed.bind(this);
   }
@@ -37,7 +39,8 @@ export default class Feed extends Component < {} > {
             var feedItems = responseData.filter((ev) => ev.type == 'PushEvent');
             this.setState({
               dataSource: this.state.dataSource
-                  .cloneWithRows(feedItems)
+                  .cloneWithRows(feedItems),
+              showProgress: false
             });
         })
       });
@@ -52,6 +55,18 @@ export default class Feed extends Component < {} > {
     </Text>
   }
   render() {
+    if(this.state.showProgress){
+      return (
+        <View style={{
+          flex: 1,
+          justifyContent: 'center'
+        }}>
+          <ActivityIndicator
+            size="large"
+            animating={true} />
+        </View>
+      );
+    }
     return (
       <View style={{
          flex: 1,

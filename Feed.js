@@ -11,7 +11,7 @@ import {
   TouchableHighlight
 } from 'react-native';
 import moment from 'moment';
-
+import PushPayload from './PushPayload';
 
 export default class Feed extends Component < {} > {
   constructor(props) {
@@ -24,6 +24,7 @@ export default class Feed extends Component < {} > {
       showProgress: true
     }
     this.fetchFeed.bind(this);
+    this.pressRow.bind(this);
   }
   componentDidMount() {
     this.fetchFeed();
@@ -49,7 +50,13 @@ export default class Feed extends Component < {} > {
       });
   }
   pressRow(rowData) {
-    console.log(rowData);
+    this.props.navigator.push({
+      title: 'Push Event',
+      component: PushPayload,
+      passProps: {
+        pushEvent: rowData
+      }
+    });
   }
   renderRow(rowData) {
     return (
@@ -63,7 +70,7 @@ export default class Feed extends Component < {} > {
           padding: 20,
           alignItems: 'center',
           borderColor: '#D7D7D7',
-          borderBottomWitdh: 1
+          borderBottomWidth: 1
         }}>
           <Image
             source={{uri: rowData.actor.avatar_url}}

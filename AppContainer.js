@@ -7,7 +7,8 @@ import {
   StyleSheet,
   Text,
   View,
-  TabBarIOS
+  TabBarIOS,
+  NavigatorIOS
 } from 'react-native';
 
 
@@ -28,7 +29,15 @@ export default class AppContainer extends Component < {} > {
           icon={require('./images/tool.png')}
           onPress={() => this.setState({selectedTab: 'feed'})}
         >
-          <Feed />
+          <NavigatorIOS
+            style={{
+              flex: 1,
+
+            }}
+            initialRoute={{
+              component: Feed,
+              title: 'feed'
+            }} />
         </TabBarIOS.Item>
         <TabBarIOS.Item
           title="Search"

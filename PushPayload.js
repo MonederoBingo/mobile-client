@@ -18,7 +18,7 @@ export default class PushPayload extends Component < {} > {
       rowHasChanged: (r1, r2) => r1 != r2
     });
     this.state = {
-      dataSource: ds,
+      dataSource: ds.cloneWithRows(props.pushEvent.payload.commits),
       pushEvent: props.pushEvent
     }
   }

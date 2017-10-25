@@ -3,6 +3,7 @@
 import React, {Component} from 'react';
 import AuthService from './AuthService';
 import Feed from './Feed';
+import Search from './Search';
 import {
   StyleSheet,
   Text,
@@ -30,14 +31,15 @@ export default class AppContainer extends Component < {} > {
           onPress={() => this.setState({selectedTab: 'feed'})}
         >
           <NavigatorIOS
-            style={{
-              flex: 1,
+              style={{
+                flex: 1,
 
-            }}
-            initialRoute={{
-              component: Feed,
-              title: 'feed'
-            }} />
+              }}
+              initialRoute={{
+                component: Feed,
+                title: 'feed'
+              }}
+            />
         </TabBarIOS.Item>
         <TabBarIOS.Item
           title="Search"
@@ -45,7 +47,16 @@ export default class AppContainer extends Component < {} > {
           icon={require('./images/search.png')}
           onPress={() => this.setState({selectedTab: 'search'})}
         >
-          <Text style={styles.welcome}>Tab2</Text>
+         <NavigatorIOS
+            style={{
+              flex: 1,
+
+            }}
+            initialRoute={{
+              component: Search,
+              title: 'search'
+            }}
+          />
         </TabBarIOS.Item>
       </TabBarIOS>
     )

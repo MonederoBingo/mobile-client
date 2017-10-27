@@ -2,6 +2,7 @@
 
 import React, {Component} from 'react';
 import AuthService from './AuthService';
+import SearchResults from './SearchResults';
 import {
   Platform,
   StyleSheet,
@@ -34,7 +35,13 @@ export default class Search extends Component < {} > {
     );
   }
   onSearchPressed() {
-    console.log('Attempting to search for ' + this.state.searchQuery);
+    this.props.navigator.push({
+      component: SearchResults,
+      title: 'results',
+      passProps: {
+        searchQuery: this.state.searchQuery
+      }
+    });
   }
 }
 

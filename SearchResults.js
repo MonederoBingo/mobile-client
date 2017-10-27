@@ -28,7 +28,20 @@ export default class SearchResults extends Component < {} > {
     this.doSearch();
   }
   doSearch(){
-    console.log('Doing searh for ', this.state.searchQuery)
+    const url = "https://api.github.com/search/repositories?q=" +
+       encodeURIComponent(this.state.searchQuery);
+    fetch(url)
+      .then((response) => response.json())
+      .then((responseData) => {
+        this.setState({
+          repositories: responseData.respositories,
+          dataSource: this.state.dataSource
+             .cloneWithRows(responseData.items)
+        });
+      })
+      .finally(() => {
+        this.setState({showProgress: false});
+      });
   }
   renderRow(rowData) {
     return (

@@ -82,4 +82,4 @@ const styles = StyleSheet.create({
     color: '#FFF',
     alignSelf: 'center'
   }
-})
+});

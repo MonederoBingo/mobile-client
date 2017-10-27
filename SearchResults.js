@@ -8,7 +8,8 @@ import {
   ListView,
   ActivityIndicator,
   Image,
-  TouchableHighlight
+  TouchableHighlight,
+  StyleSheet
 } from 'react-native';
 
 export default class SearchResults extends Component < {} > {
@@ -45,20 +46,39 @@ export default class SearchResults extends Component < {} > {
   }
   renderRow(rowData) {
     return (
-      <TouchableHighlight
-        underlayColor='#ddd'
-      >
-        <View style={{
-          flex: 1,
-          flexDirection: 'row',
-          padding: 20,
-          alignItems: 'center',
-          borderColor: '#D7D7D7',
-          borderBottomWidth: 1
-        }}>
-
+        <View style= {{
+            padding: 20,
+            borderColor: '#D7D7D7',
+            borderBottomWidth: 1,
+            backgroundColor: '#fff'
+          }}>
+          <Text style={{
+              fontSize: 20,
+              fontWeight: "600",
+              paddingTop: 30
+            }}>
+            {rowData.full_name}
+          </Text>
+          <View style={{
+              flex: 1,
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              marginTop: 20,
+              margingBottom: 20,
+            }}>
+             <View style={styles.repoCell}>
+               <Text style={styles.repoCellLabel}>
+                 {rowData.stargazers_count} stars
+               </Text>
+               <Text style={styles.repoCellLabel}>
+                 {rowData.forks} forks
+               </Text>
+               <Text style={styles.repoCellLabel}>
+                 {rowData.open_issues} issues
+               </Text>
+             </View>
+          </View>
         </View>
-      </TouchableHighlight>
     );
   }
   render() {
@@ -87,3 +107,17 @@ export default class SearchResults extends Component < {} > {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  repoCell: {
+    width: 100,
+    alignItems: 'center'
+  },
+  repoCellIcon: {
+    width: 20,
+    height: 20
+  },
+  repoCellLabel: {
+    textAlign: 'center'
+  }
+});
